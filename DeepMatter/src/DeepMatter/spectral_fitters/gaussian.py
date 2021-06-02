@@ -12,8 +12,7 @@ class Gaussian:
                  sd=[0, 1],
                  mean=[0, 1],
                  amp=[0, 1],
-                 idk =[0,1], 
-                 gamma=[0,1],
+                 fraction =[0,1], 
                  size=(1, 1),
                  verbose=False):
         """
@@ -31,8 +30,7 @@ class Gaussian:
         self.sd = sd
         self.mean = mean
         self.amp = amp
-        self.idk = idk #sorry idk what to name the 'i'
-        self.gamma = gamma
+        self.fraction = fraction 
         self.x_vector = x_vector
         self.size = size
         self.verbose = verbose
@@ -51,7 +49,7 @@ class Gaussian:
         if self.verbose:
             print({f'pre-param size {params.size()}'})
 
-        if len(params.size()) == 3: # changed
+        if len(params.size()) == 3: # 3??
             params = torch.reshape(params, (params.shape[0], 3, -1)) #idk if i need to change this
 
         if self.verbose:
@@ -67,8 +65,8 @@ class Gaussian:
 
         for i in range(self.size[1]):
             _sd = params[:, 1, i].to(device) 
-            _gamma = params[:, 1, i].to(device) # new parameter
-            _i = params[:, 1, i].to(device) # new parameter
+            _mean = params[:, 1, i].to(device) 
+            _fraction = params[:, 1, i].to(device) 
             _amp = params[:, 2, i].to(device) 
 
             x_vector = torch.cat(params.shape[0] * [self.x_vector]).reshape(
@@ -79,11 +77,22 @@ class Gaussian:
             if self.verbose:
                 print(f'x_vector_shape = {x_vector.size()}')
 
-            
-            _temp = torch.tensor(math.pi * 2)
-            _out = _amp * ((x_vector + i * _gamma) / (_sd * torch.sqrt(_temp))) # added
+            _sigma = _sd / torch.sqrt(2 * torch.log(2))
+            _pi = torch.tensor(math.pi)
+            _temp = ((1 - _fraction) * _amp) / (_sigma * torch.sqrt(_pi * 2))
 
             if self.verbose:
+                print(f'mean_size = {_mean.size()}')
+
+            _square = torch.pow((x_vector - _mean), 2)
+            _exp = torch.exp( (0 - _square) / (2 * torch.pow(_sigma,2)))
+            _left = _temp * _exp
+            _temp = (_fraction * _amp) / _pi
+            _right = _temp * (_sd / (_square + torch.pow(_sd, 2)))
+            _out = _left + _right
+
+            if self.verbose:
+                # print(f'amp {_amp.size()}, base {_base.size()}, exp {_exp.size()}')
                 print(f'out shape = {_out.shape}')
             out[:, :, 0, i] = torch.transpose(_out, 0, 1)
 
@@ -104,10 +113,9 @@ class Gaussian:
         sd = rand_tensor(min=self.sd[0], max=self.sd[1], size=self.size)
         mean = rand_tensor(min=self.mean[0], max=self.mean[1], size=self.size)
         amp = rand_tensor(min=self.amp[0], max=self.amp[1], size=self.size)
-        idk = rand_tensor(min=self.idk[0], max=self.idk[1], size=self.size) # added
-        gamma = rand_tensor(min=self.gamma[0], max=self.gamma[1], size=self.size) #added
+        fraction = rand_tensor(min=self.fraction[0], max=self.fraction[1], size=self.size) 
 
-        _params = torch.torch.stack((mean, sd, i, gamma, amp)) #changed
+        _params = torch.torch.stack((sd, mean, amp, fraction)) 
         _params = torch.atleast_2d(_params)
         _params = torch.transpose((_params), 0, 1)
         return self.compute(_params, device=device), _params

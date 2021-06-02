@@ -35,16 +35,14 @@ class Dataset_Generator(Dataset):
         self.sd = kwargs.get('sd')
         self.mean = kwargs.get('mean')
         self.amp = kwargs.get('amp')
-        self.idk = kwargs.get('idk')
-        self.gamma = kwargs.get('gamma')
+        self.fraction = kwargs.get('fraction')
         self.x_vector = kwargs.get('x_vector')
         self.size = size
         self.function = self.model(self.x_vector,
                                    sd=self.sd,
                                    mean=self.mean,
                                    amp=self.amp,
-                                   idk = self.idk, 
-                                   gamma = self.gamma,
+                                   idk = self.fraction, 
                                    size=self.size)
 
     def __len__(self):
