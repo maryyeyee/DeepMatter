@@ -14,7 +14,7 @@ class PseudoVoigt:
                  amp=[0, 1],
                  fraction =[0,1], 
                  size=(1, 1),
-                 verbose=False):
+                 verbose=True):
         """
 
         Args:
