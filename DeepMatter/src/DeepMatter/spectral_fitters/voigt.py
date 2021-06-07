@@ -50,7 +50,7 @@ class PseudoVoigt:
             print({f'pre-param size {params.size()}'})
 
         if len(params.size()) == 3: 
-            params = torch.reshape(params, (params.shape[0], 3, -1)) #idk if i need to change this
+            params = torch.reshape(params, (params.shape[0], 4, -1)) #idk if i need to change this
 
         if self.verbose:
             print(f'parm size = {params.size()}')
