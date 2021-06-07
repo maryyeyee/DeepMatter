@@ -3,6 +3,7 @@ import torch
 
 class DensePhysEnc9185(nn.Module):
 
+    # initialize nn layers
     def __init__(self,
                  x_vector,
                  model,

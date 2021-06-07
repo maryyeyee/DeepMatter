@@ -1,2 +1,2 @@
-from . import gaussian
+from . import voigt
 from . import nn

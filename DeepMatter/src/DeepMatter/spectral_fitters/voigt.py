@@ -49,7 +49,7 @@ class PseudoVoigt:
         if self.verbose:
             print({f'pre-param size {params.size()}'})
 
-        if len(params.size()) == 3: # 3??
+        if len(params.size()) == 3: 
             params = torch.reshape(params, (params.shape[0], 3, -1)) #idk if i need to change this
 
         if self.verbose:
