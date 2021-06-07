@@ -42,7 +42,7 @@ class Dataset_Generator(Dataset):
                                    sd=self.sd,
                                    mean=self.mean,
                                    amp=self.amp,
-                                   idk = self.fraction, 
+                                   fraction = self.fraction, 
                                    size=self.size)
 
     def __len__(self):
