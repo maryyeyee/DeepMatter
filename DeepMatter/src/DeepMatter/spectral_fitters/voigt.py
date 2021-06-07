@@ -65,7 +65,7 @@ class PseudoVoigt:
 
         for i in range(self.size[1]):
             _mean = params[:, 0, i].to(device) 
-             _amp = params[:, 1, i].to(device) 
+            _amp = params[:, 1, i].to(device) 
             _sd = params[:, 2, i].to(device) 
             _fraction = params[:, 3, i].to(device) 
            
