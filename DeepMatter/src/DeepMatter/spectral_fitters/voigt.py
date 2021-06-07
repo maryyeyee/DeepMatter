@@ -64,10 +64,11 @@ class PseudoVoigt:
             print(self.size[1])
 
         for i in range(self.size[1]):
-            _sd = params[:, 1, i].to(device) 
-            _mean = params[:, 1, i].to(device) 
-            _fraction = params[:, 1, i].to(device) 
-            _amp = params[:, 2, i].to(device) 
+            _mean = params[:, 0, i].to(device) 
+             _amp = params[:, 1, i].to(device) 
+            _sd = params[:, 2, i].to(device) 
+            _fraction = params[:, 3, i].to(device) 
+           
 
             x_vector = torch.cat(params.shape[0] * [self.x_vector]).reshape(
                 params.shape[0], -1).to(device)
@@ -117,7 +118,7 @@ class PseudoVoigt:
         amp = rand_tensor(min=self.amp[0], max=self.amp[1], size=self.size)
         fraction = rand_tensor(min=self.fraction[0], max=self.fraction[1], size=self.size) 
 
-        _params = torch.torch.stack((sd, mean, amp, fraction)) 
+        _params = torch.torch.stack((mean, amp, sd, fraction)) 
         _params = torch.atleast_2d(_params)
         _params = torch.transpose((_params), 0, 1)
         return self.compute(_params, device=device), _params
