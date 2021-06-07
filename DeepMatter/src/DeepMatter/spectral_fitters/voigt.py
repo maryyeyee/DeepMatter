@@ -63,7 +63,7 @@ class PseudoVoigt:
         if self.verbose:
             print(self.size[1])
 
-        for i in range(self.size[1]):
+        for i in range(self.size[2]):
             _sd = params[:, 1, i].to(device) 
             _mean = params[:, 1, i].to(device) 
             _fraction = params[:, 1, i].to(device) 
