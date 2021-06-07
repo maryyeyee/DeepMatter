@@ -14,7 +14,7 @@ class PseudoVoigt:
                  amp=[0, 1],
                  fraction =[0,1], 
                  size=(1, 1),
-                 verbose=True):
+                 verbose=False):
         """
 
         Args:
@@ -99,7 +99,7 @@ class PseudoVoigt:
                 print(f'out shape = {_out.shape}')
             out[:, :, 0, i] = torch.transpose(_out, 0, 1)
 
-        return torch.sum(out, dim=3)
+        return torch.sum(out, dim=4)
 
     def sampler(self, device='cpu'):
         """
