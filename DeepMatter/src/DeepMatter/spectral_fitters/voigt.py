@@ -76,6 +76,7 @@ class PseudoVoigt:
 
             if self.verbose:
                 print(f'x_vector_shape = {x_vector.size()}')
+                print(_sd, _mean, _fraction, _amp)
 
             _log = torch.tensor(math.log(2))
             _sigma = _sd / torch.sqrt(2 * _log)
