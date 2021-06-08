@@ -49,7 +49,7 @@ class PseudoVoigt:
         if self.verbose:
             print({f'pre-param size {params.size()}'})
 
-        if len(params.size()) == 3: 
+        if len(params.size()) == 2: 
             params = torch.reshape(params, (params.shape[0], 4, -1)) #idk if i need to change this
 
         if self.verbose:
@@ -99,7 +99,7 @@ class PseudoVoigt:
                 print(f'out shape = {_out.shape}')
             out[:, :, 0, i] = torch.transpose(_out, 0, 1)
 
-        return torch.sum(out, dim=3)
+        return torch.sum(out, dim=3) 
 
     def sampler(self, device='cpu'):
         """
