@@ -29,7 +29,7 @@ class DensePhysEnc9185(nn.Module):
         self.verbose = verbose
         self.num_channels = num_channels
         self.device = device
-        self.model = model(self.x_vector, size=(num_channels, num_params // 3))
+        self.model = model(self.x_vector, size=(num_channels, num_params // 4))
 
         if torch.cuda.is_available():
             self.cuda()

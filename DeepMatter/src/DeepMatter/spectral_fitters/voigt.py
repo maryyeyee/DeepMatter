@@ -50,8 +50,7 @@ class PseudoVoigt:
             print({f'pre-param size {params.size()}'})
 
         if len(params.size()) == 2: 
-            params = torch.reshape(params, (params.shape[0], 4, -1)) #idk if i need to change this
-
+            params = torch.reshape(params, (params.shape[0], 4, -1)) 
         if self.verbose:
             print(f'parm size = {params.size()}')
             print(f'x_vector size = {self.x_vector.shape[0]}')
@@ -91,7 +90,7 @@ class PseudoVoigt:
             _exp = torch.exp( (0 - _square) / (2 * torch.pow(_sigma,2)))
             _left = _temp * _exp
             _temp = (_fraction * _amp) / _pi
-            _right = _temp * (_sd / (_square + torch.pow(_sd, 2)))
+            _right = _temp * (_sd / ((_square + torch.pow(_sd, 2)) + .01) )
             _out = _left + _right
 
             if self.verbose:
